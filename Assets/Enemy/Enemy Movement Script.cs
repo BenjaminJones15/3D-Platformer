@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovementScript : MonoBehaviour
 {
-    public float speed = 0.001f;
+    public float speed = 0.01f;
     public Vector3 v = new Vector3(1, 1, 1);
     public bool IsX;
     public bool IsY;
