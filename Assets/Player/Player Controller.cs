@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
 
     private bool JumpPressed = false;
 
+    private int Score = 0;
+
+    public AudioSource audioSource;
+    public AudioClip CoinSound;
+    public AudioClip EnemySound;
+    public AudioClip GoalSound;
+    public float volume = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,4 +85,20 @@ public class PlayerController : MonoBehaviour
 
         return Grounded1 || Grounded2 || Grounded3 || Grounded4;
     }
+
+    public void OnTriggerEnter(Collider collider){
+        if (collider.CompareTag("Coin")){
+            Score += 1;
+            Destroy(collider.gameObject);
+            audioSource.PlayOneShot(CoinSound, volume);
+        } else if (collider.CompareTag("Enemy")){
+            audioSource.PlayOneShot(EnemySound, volume);
+            Destroy(gameObject);
+        } else if (collider.CompareTag("Goal")){
+            audioSource.PlayOneShot(GoalSound, volume);
+        }
+
+    }
+
+
 }
