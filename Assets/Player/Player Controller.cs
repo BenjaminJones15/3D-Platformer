@@ -15,15 +15,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Collider col;
 
+    //public Camera FrontCamera;
+    //public Camera RightCamera;
+    //public Camera LeftCamera;
+
     private bool JumpPressed = false;
-
-    private int Score = 0;
-
-    public AudioSource audioSource;
-    public AudioClip CoinSound;
-    public AudioClip EnemySound;
-    public AudioClip GoalSound;
-    public float volume = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +27,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         PlayerSize = col.bounds.size;
+        //FrontCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        //RightCamera = GameObject.Find("Right Camera").GetComponent<Camera>();
+        //LeftCamera = GameObject.Find("Left Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void FixedUpdate(){
         WalkHandler();
         JumpHandler();
+        //CameraHandler();
     }
 
     void WalkHandler() {
@@ -78,27 +78,25 @@ public class PlayerController : MonoBehaviour
         bool Grounded3 = Physics.Raycast(Corner3, -Vector3.up, 0.1f);
         bool Grounded4 = Physics.Raycast(Corner4, -Vector3.up, 0.1f);
 
-        print(Grounded4);
-        print(Grounded3);
-        print(Grounded2);
-        print(Grounded1);
-
         return Grounded1 || Grounded2 || Grounded3 || Grounded4;
     }
 
-    public void OnTriggerEnter(Collider collider){
-        if (collider.CompareTag("Coin")){
-            Score += 1;
-            Destroy(collider.gameObject);
-            audioSource.PlayOneShot(CoinSound, volume);
-        } else if (collider.CompareTag("Enemy")){
-            audioSource.PlayOneShot(EnemySound, volume);
-            Destroy(gameObject);
-        } else if (collider.CompareTag("Goal")){
-            audioSource.PlayOneShot(GoalSound, volume);
+    /*void CameraHandler() {
+        if (UnityEngine.Input.GetKeyDown("f")){
+            FrontCamera.enabled = true;
+            LeftCamera.enabled = false;
+            RightCamera.enabled = false;
         }
-
-    }
+        else if (UnityEngine.Input.GetKeyDown("l")){
+            FrontCamera.enabled = false;
+            LeftCamera.enabled = true;
+            RightCamera.enabled = false;
+        } else if (UnityEngine.Input.GetKeyDown("r")){
+            FrontCamera.enabled = false;
+            LeftCamera.enabled = false;
+            RightCamera.enabled = true;
+        }
+    }*/
 
 
 }

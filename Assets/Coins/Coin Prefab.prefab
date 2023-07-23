@@ -99,6 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+  Score: 0
+  audioSource: {fileID: 0}
+  CoinSound: {fileID: 8300000, guid: cdc18453bd4699446a7b2b1d091a3124, type: 3}
+  volume: 1
 --- !u!64 &1693143125434285192
 MeshCollider:
   m_ObjectHideFlags: 0

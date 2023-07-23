@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
-public class EnemyMovementScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
     public float speed = 0.01f;
     public Vector3 v = new Vector3(1, 1, 1);
@@ -11,10 +13,13 @@ public class EnemyMovementScript : MonoBehaviour
     public float UpperRange;
     public float LowerRange;
 
+    public AudioSource audioSource;
+    public AudioClip EnemySound;
+    public float volume = 1f;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start(){
+        audioSource = GameObject.FindAnyObjectByType<AudioSource>();
     }
 
     // Update is called once per frame
@@ -42,5 +47,21 @@ public class EnemyMovementScript : MonoBehaviour
             }
         }
   
+    }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Player")){
+            Destroy(collider.gameObject);
+            StartCoroutine(waiter());
+        }
+
+    }
+
+    IEnumerator waiter()
+    {
+        audioSource.PlayOneShot(EnemySound, volume);
+        yield return new WaitForSeconds(EnemySound.length);
+        GameManager.instance.ResetLevel();
     }
 }
