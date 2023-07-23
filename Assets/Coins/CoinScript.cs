@@ -31,6 +31,7 @@ public class CoinScript : MonoBehaviour
             GameManager.instance.IncreaseScore(1);
             audioSource.PlayOneShot(CoinSound, volume);
             Destroy(gameObject);
+            
         }
 
     }

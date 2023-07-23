@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int Score = 0;
     public int HighScore = 0;
     public static GameManager instance;
+    private HUDManager hudmanager;
 
     public int CurrentLevel = 1;
     public int HighestLevel = 2;
@@ -18,21 +19,31 @@ public class GameManager : MonoBehaviour
         if (instance == null) { 
             instance = this;
         } else if (instance != this){
+            instance.hudmanager = FindObjectOfType<HUDManager>();
             Destroy(gameObject);
         }
 
         DontDestroyOnLoad(gameObject);
+
+        hudmanager = FindObjectOfType<HUDManager>();
     }
 
     public void IncreaseScore(int amount) {
         Score += amount;
-        if (Score > HighScore) { 
+        if (hudmanager != null){
+            hudmanager.UpdateHUD();
+        }
+        if (Score > HighScore) {
             HighScore = Score;
         }
     }
 
-    public void ResetLevel() { 
+    public void ResetLevel() {
+        //might need to load cameras here too?
         Score = 0;
+        if (hudmanager != null){
+            hudmanager.UpdateHUD();
+        }
         CurrentLevel = 1;
         SceneManager.LoadScene("Level " + CurrentLevel);
     }
