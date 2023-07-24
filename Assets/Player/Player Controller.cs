@@ -55,6 +55,12 @@ public class PlayerController : MonoBehaviour
         Vector3 NewPosition = transform.position + Movement;
 
         rb.MovePosition(NewPosition);
+
+        if (XInput != 0 || ZInput != 0) {
+            Vector3 FacingDirection = new Vector3(XInput, 0, ZInput);
+
+            rb.rotation = Quaternion.LookRotation(FacingDirection);
+        }
     }
 
     void JumpHandler() {
