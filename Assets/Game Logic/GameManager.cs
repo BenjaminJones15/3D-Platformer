@@ -40,12 +40,11 @@ public class GameManager : MonoBehaviour
 
     public void ResetLevel() {
         //might need to load cameras here too?
-        Score = 0;
         if (hudmanager != null){
             hudmanager.UpdateHUD();
         }
         CurrentLevel = 1;
-        SceneManager.LoadScene("Level " + CurrentLevel);
+        SceneManager.LoadScene("Game Over Screen");
     }
 
     public void NextLevel() {
