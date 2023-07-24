@@ -21,21 +21,28 @@ public class PlayerController : MonoBehaviour
 
     private bool JumpPressed = false;
 
+    public AudioSource audioSource;
+    public AudioClip EnemySound;
+    public float volume = 1f;
+    public bool Fallen = false;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         PlayerSize = col.bounds.size;
+        audioSource = GameObject.FindAnyObjectByType<AudioSource>();
         //FrontCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         //RightCamera = GameObject.Find("Right Camera").GetComponent<Camera>();
         //LeftCamera = GameObject.Find("Left Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
-    void FixedUpdate(){
+    void FixedUpdate() {
         WalkHandler();
         JumpHandler();
+        FallingHandler();
         //CameraHandler();
     }
 
@@ -50,21 +57,36 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(NewPosition);
     }
 
-    void JumpHandler(){
+    void JumpHandler() {
         float YInput = UnityEngine.Input.GetAxis("Jump");
 
-        if (YInput > 0){
+        if (YInput > 0) {
             bool IsGrounded = CheckGrounded();
 
-            if (JumpPressed != true && IsGrounded == true){
+            if (JumpPressed != true && IsGrounded == true) {
                 JumpPressed = true;
                 Vector3 Jump = new Vector3(0, YInput * JumpSpeed, 0);
                 rb.AddForce(Jump, ForceMode.VelocityChange);
             }
-            
-        } else{
+
+        } else {
             JumpPressed = false;
         }
+    }
+
+    void FallingHandler() { 
+        if (transform.position.y < 0 && Fallen == false) {
+            Fallen = true;
+            StartCoroutine(waiter());
+        }
+    }
+
+    IEnumerator waiter()
+    {
+        audioSource.PlayOneShot(EnemySound, volume);
+        yield return new WaitForSeconds(EnemySound.length);
+        Fallen = false;
+        GameManager.instance.ResetLevel();
     }
 
     private bool CheckGrounded(){
