@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class EnemyScript : MonoBehaviour
 {
-    public float speed = 0.01f;
+    public float speed = 0.8f;
     public Vector3 v = new Vector3(1, 1, 1);
     public bool IsX;
     public bool IsY;
@@ -25,7 +25,7 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition += v * speed;
+        transform.localPosition += v * speed*Time.fixedDeltaTime;
 
         if (IsX == true){
             if (transform.localPosition.x >= UpperRange){
@@ -47,6 +47,16 @@ public class EnemyScript : MonoBehaviour
             }
         }
   
+    }
+
+    public void FixedUpdate()
+    {
+        
+    }
+
+    public void OnAnimatorMove()
+    {
+        
     }
 
     public void OnTriggerEnter(Collider collider)
