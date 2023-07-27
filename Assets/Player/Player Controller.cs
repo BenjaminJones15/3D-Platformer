@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
@@ -15,9 +16,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Collider col;
 
-    //public Camera FrontCamera;
-    //public Camera RightCamera;
-    //public Camera LeftCamera;
+    public float CameraDistancez = 4.75f;
+    public float CameraDistancex = 2.3f;
+    public float CameraDistancey = 5.15f;
 
     private bool JumpPressed = false;
 
@@ -33,9 +34,7 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<Collider>();
         PlayerSize = col.bounds.size;
         audioSource = GameObject.FindAnyObjectByType<AudioSource>();
-        //FrontCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        //RightCamera = GameObject.Find("Right Camera").GetComponent<Camera>();
-        //LeftCamera = GameObject.Find("Left Camera").GetComponent<Camera>();
+        CameraFollow();
     }
 
     // Update is called once per frame
@@ -43,7 +42,7 @@ public class PlayerController : MonoBehaviour
         WalkHandler();
         JumpHandler();
         FallingHandler();
-        //CameraHandler();
+        CameraFollow();
     }
 
     void WalkHandler() {
@@ -95,6 +94,17 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.ResetLevel();
     }
 
+    void CameraFollow()
+    {
+        Vector3 CamPosition = Camera.main.transform.position;
+        CamPosition.z = transform.position.z - CameraDistancez;
+        CamPosition.x = transform.position.x - CameraDistancex;
+        CamPosition.y = transform.position.y + CameraDistancey;
+
+        Camera.main.transform.position = CamPosition;
+    }
+
+
     private bool CheckGrounded(){
         Vector3 Corner1 = transform.position + new Vector3(PlayerSize.x/2, -PlayerSize.y/2 + 0.01f, PlayerSize.z/2);
         Vector3 Corner2 = transform.position + new Vector3(-PlayerSize.x / 2, -PlayerSize.y / 2 + 0.01f, PlayerSize.z / 2);
@@ -108,23 +118,6 @@ public class PlayerController : MonoBehaviour
 
         return Grounded1 || Grounded2 || Grounded3 || Grounded4;
     }
-
-    /*void CameraHandler() {
-        if (UnityEngine.Input.GetKeyDown("f")){
-            FrontCamera.enabled = true;
-            LeftCamera.enabled = false;
-            RightCamera.enabled = false;
-        }
-        else if (UnityEngine.Input.GetKeyDown("l")){
-            FrontCamera.enabled = false;
-            LeftCamera.enabled = true;
-            RightCamera.enabled = false;
-        } else if (UnityEngine.Input.GetKeyDown("r")){
-            FrontCamera.enabled = false;
-            LeftCamera.enabled = false;
-            RightCamera.enabled = true;
-        }
-    }*/
 
 
 }

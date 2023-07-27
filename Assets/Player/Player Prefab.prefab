@@ -42,7 +42,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5441200126245609156}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 46566965bb76c554bbf382fc6aff570e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -73,6 +73,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   EnemySound: {fileID: 8300000, guid: e1284797186d8a04f8346bf8923a19c1, type: 3}
   volume: 1
+  Fallen: 0
 --- !u!54 &6027030220634992255
 Rigidbody:
   m_ObjectHideFlags: 0
