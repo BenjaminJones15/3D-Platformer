@@ -635,7 +635,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Benjamin's First Game
+  m_text: LegitLizard's First Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f405e87b0ed573c47b4d44dc20a4c5a9, type: 2}
   m_sharedMaterial: {fileID: -362179805372175966, guid: f405e87b0ed573c47b4d44dc20a4c5a9, type: 2}
